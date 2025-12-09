@@ -1,0 +1,48 @@
+# syntax=docker/dockerfile:1.9.0-labs
+FROM ramonfontes/bmv2:lowpan
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+VOLUME /flw
+
+# Remove the expired p4lang repository to prevent apt errors
+RUN rm -f /etc/apt/sources.list.d/*p4lang* || true
+
+# Install base packages including Python 3.10 (already available in Ubuntu 22.04)
+RUN apt-get update && apt-get install -y \
+    net-tools \
+    iputils-ping \
+    iproute2 \
+    python3.10 \
+    python3.10-venv \
+    python3.10-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create symbolic link for python3
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python3
+
+# Install pip for Python 3.10
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+
+# Upgrade pip
+RUN python3.10 -m pip install --upgrade pip
+
+EXPOSE 1883
+EXPOSE 8883
+
+# Copy the requirements file into the container
+COPY ../util/requirements/container/server.requirements.txt .
+COPY ../util/server /server
+
+# Install the Python dependencies
+RUN python3.10 -m pip install --no-cache-dir -r server.requirements.txt 
+
+# Remoção da interface padrão
+# RUN apt install sudo
+# RUN --security=insecure ifconfig eth0 down 
+# RUN --security=insecure route add default gw 10.0.0.1
+
+CMD ["/bin/bash"]
