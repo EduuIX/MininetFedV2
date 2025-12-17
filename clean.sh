@@ -1,0 +1,19 @@
+sudo docker rmi -f mininetfed:auto_wait
+sudo docker rmi -f mininetfed:auto_wait6
+sudo docker rmi -f mininetfed:broker
+sudo docker rmi -f mininetfed:client
+sudo docker rmi -f mininetfed:clientsensor
+sudo docker rmi -f mininetfed:server
+sudo docker rmi -f mininetfed:serversensor
+
+sudo docker rm -f mn.sta0
+sudo docker rm -f mn.sta1
+sudo docker rm -f mn.sta2
+sudo docker rm -f mn.sta3
+sudo docker rm -f mn.sta4
+sudo docker rm -f mn.sta5
+sudo docker rm -f mn.sta6
+sudo docker rm -f mn.sta7
+sudo docker rm -f mn.srv1
+sudo docker rm -f mn.brk
+sudo docker rm -f mn.stop

@@ -155,7 +155,7 @@ class Client (Docker):
         self.cmd("route add default gw %s" %
                  self.broker_addr)
 
-        makeTerm(self, cmd=cmd)
+        self.cmd(cmd + ' &')
 
 class ClientSensor (DockerSensor):
     """Node that represents a docker container of a MininerFed client.
@@ -259,7 +259,7 @@ class Server (Docker):
         self.cmd("route add default gw %s" %
                  self.broker_addr)
 
-        makeTerm(self, cmd=cmd)
+        self.cmd(cmd + ' &')
 
 class ServerSensor (DockerSensor):
     """Node that represents a docker container of a MininerFed server.
