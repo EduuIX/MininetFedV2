@@ -27,4 +27,6 @@ client_log/
 TODO.md
 mininetfed.egg-info/
 build/
+dist/
+containernet/
 .idea
